@@ -1,4 +1,4 @@
-// Get references to page elements
+//Get references to page elements
 //test
 //test again
 var $exampleText = $("#example-text");
