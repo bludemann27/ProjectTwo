@@ -1,7 +1,7 @@
 CREATE DATABASE PRESC_DRUG;
 USE PRESC_DRUG;
 
-create TABLE `user_info`
+create TABLE user_info
 (
     USER_ID int NOT NULL auto_increment,
     USER_NAME varchar
@@ -26,7 +26,7 @@ create TABLE `user_info`
    PRIMARY KEY
 (USER_ID));
 
-create TABLE `presc_drug_info`
+create TABLE presc_drug_info
 (
     DRUG_ID int NOT NULL auto_increment,
    DRUG_NAME varchar

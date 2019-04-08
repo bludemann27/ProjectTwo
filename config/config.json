@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "Password",
-    "database": "exampledb",
+    "database": "presc_drug",
     "host": "localhost",
     "dialect": "mysql"
   },
@@ -16,6 +16,6 @@
   },
   "production": {
     "use_env_variable": "JAWSDB_URL",
-    "dialect": "mysql"
+    "dialect": "mysql"    
   }
 }
