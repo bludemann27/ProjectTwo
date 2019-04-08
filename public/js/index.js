@@ -1,47 +1,50 @@
-// Get references to page elements
-var $exampleText = $("#example-text");
-var $exampleDescription = $("#example-description");
+//Get references to page elements
+//test
+//test again
+var $drugEntryDrugName = $("#drugEntry-drugName");
+var $drugEntryDescription = $("#drugEntry-description");
+var $drugEntryDosage = $("#drugEntry-dosage");
 var $submitBtn = $("#submit");
-var $exampleList = $("#example-list");
+var $adminEntryList = $("#drugEntry-list");
 
 // The API object contains methods for each kind of request we'll make
 var API = {
-  saveExample: function(example) {
+  savedrugEntry: function(drugEntry) {
     return $.ajax({
       headers: {
         "Content-Type": "application/json"
       },
       type: "POST",
-      url: "api/examples",
-      data: JSON.stringify(example)
+      url: "api/drugEntry",
+      data: JSON.stringify(drugEntry)
     });
   },
-  getExamples: function() {
+  getdrugName: function() {
     return $.ajax({
-      url: "api/examples",
+      url: "api/drugEntry",
       type: "GET"
     });
   },
-  deleteExample: function(id) {
+  deleteDrugName: function(id) {
     return $.ajax({
-      url: "api/examples/" + id,
+      url: "api/drugEntry/" + id,
       type: "DELETE"
     });
   }
 };
 
 // refreshExamples gets new examples from the db and repopulates the list
-var refreshExamples = function() {
-  API.getExamples().then(function(data) {
-    var $examples = data.map(function(example) {
+var refreshDrugName = function() {
+  API.getdrugName().then(function(data) {
+    var $drugEntry = data.map(function(drugEntry) {
       var $a = $("<a>")
-        .text(example.text)
-        .attr("href", "/example/" + example.id);
+        .text(drugEntry.drugName)
+        .attr("href", "/drugEntry/" + drugEntry.id);
 
       var $li = $("<li>")
         .attr({
           class: "list-group-item",
-          "data-id": example.id
+          "data-id": drugEntry.id
         })
         .append($a);
 
@@ -54,8 +57,8 @@ var refreshExamples = function() {
       return $li;
     });
 
-    $exampleList.empty();
-    $exampleList.append($examples);
+    $adminEntryList.empty();
+    $adminEntryList.append($drugEntry);
   });
 };
 
@@ -64,22 +67,24 @@ var refreshExamples = function() {
 var handleFormSubmit = function(event) {
   event.preventDefault();
 
-  var example = {
-    text: $exampleText.val().trim(),
-    description: $exampleDescription.val().trim()
+  var drugEntry = {
+    drugName: $drugEntryDrugName.val().trim(),
+    description: $drugEntryDescription.val().trim(),
+    dosage: $drugEntryDosage.val().trim()
   };
 
-  if (!(example.text && example.description)) {
+  if (!(drugEntry.drugName && drugEntry.description)) {
     alert("You must enter an example text and description!");
     return;
   }
 
-  API.saveExample(example).then(function() {
-    refreshExamples();
+  API.savedrugEntry(drugEntry).then(function() {
+    refreshDrugName();
   });
 
-  $exampleText.val("");
-  $exampleDescription.val("");
+  $drugEntryDrugName.val("");
+  $drugEntryDescription.val("");
+  $drugEntryDosage.val("");
 };
 
 // handleDeleteBtnClick is called when an example's delete button is clicked
@@ -89,11 +94,11 @@ var handleDeleteBtnClick = function() {
     .parent()
     .attr("data-id");
 
-  API.deleteExample(idToDelete).then(function() {
-    refreshExamples();
+  API.deleteDrugName(idToDelete).then(function() {
+    refreshDrugName();
   });
 };
 
 // Add event listeners to the submit and delete buttons
 $submitBtn.on("click", handleFormSubmit);
-$exampleList.on("click", ".delete", handleDeleteBtnClick);
+$adminEntryList.on("click", ".delete", handleDeleteBtnClick);
